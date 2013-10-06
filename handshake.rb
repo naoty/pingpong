@@ -1,7 +1,7 @@
 require "digest/sha1"
 require "base64"
 
-module PingPong
+module PingPongIO
   class Handshake
     CRLF = "\r\n"
     SP = " "

@@ -1,7 +1,7 @@
 require "socket"
 require "./handshake"
 
-module PingPong
+module PingPongIO
   class Server
     def initialize(host, port)
       @server = TCPServer.new(host, port)
@@ -21,4 +21,4 @@ module PingPong
   end
 end
 
-PingPong::Server.new("127.0.0.1", 4481).start
+PingPongIO::Server.new("127.0.0.1", 4481).start
