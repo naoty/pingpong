@@ -14,12 +14,7 @@ module PingPong
       loop do
         connection = @server.accept
         handshake = Handshake.new(connection.readpartial(4096))
-        if handshake.valid?
-          connection.write(handshake.to_response)
-        else
-          # TODO: Raise InvalidHandshakeError
-          connection.write("invalid handshake")
-        end
+        connection.write(handshake.to_response)
         connection.close
       end
     end
