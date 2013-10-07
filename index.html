@@ -7,6 +7,7 @@
     var socket = new WebSocket("ws://localhost:4481");
     socket.onopen = function (event) {
       console.log("Connection established.");
+      socket.send("Hello! I'm a websocket client.")
     };
     socket.onerror = function (event) {
       console.log("Connection error occured.")

@@ -34,14 +34,18 @@ module PingPongIO
     end
 
     # See Section 4.2.2. of RFC 6455
-    def to_response
+    def response
       lines = []
-      if valid?
-        lines << "HTTP/1.1 101 Switching Protocols"
-        lines += response_headers.map { |header| header.join(": ") }
-      else
-        lines << "HTTP/1.1 400 Bad Request"
-      end
+      lines << "HTTP/1.1 101 Switching Protocols"
+      lines += response_headers.map { |header| header.join(": ") }
+      lines << ""
+      lines << ""
+      lines.join(CRLF)
+    end
+
+    def self.error_response
+      lines = []
+      lines << "HTTP/1.1 400 Bad Request"
       lines << ""
       lines << ""
       lines.join(CRLF)
