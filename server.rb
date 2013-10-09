@@ -1,5 +1,6 @@
 require "socket"
 require "./handshake"
+require "./frame/request"
 
 module PingPongIO
   class Server
@@ -22,6 +23,14 @@ module PingPongIO
           if socket == @server
             establish_connection
           else
+            begin
+              request = socket.read_nonblock(CHUNK_SIZE)
+              message = Frame::Request.new(request).message
+              puts message
+              # the message may be passed to a web application.
+            rescue EOFError
+              @sockets.delete(socket.fileno)
+            end
           end
         end
       end

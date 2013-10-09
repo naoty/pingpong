@@ -3,17 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>PingPongIO Client Sample</title>
+</head>
+<body>
+  <form id="form" action="">
+    <input id="input" type="text" />
+    <input type="submit" />
+  </form>
+
   <script>
     var socket = new WebSocket("ws://localhost:4481");
     socket.onopen = function (event) {
       console.log("Connection established.");
-      socket.send("Hello! I'm a websocket client.")
     };
     socket.onerror = function (event) {
-      console.log("Connection error occured.")
-    }
+      console.log("Connection error occured.");
+    };
+
+    var form = document.getElementById("form");
+    var input = document.getElementById("input");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      socket.send(input.value);
+    });
   </script>
-</head>
-<body>
 </body>
 </html>
