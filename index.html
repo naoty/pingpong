@@ -18,6 +18,9 @@
     socket.onerror = function (event) {
       console.log("Connection error occured.");
     };
+    socket.onmessage = function (event) {
+      console.log(event.data);
+    };
 
     var form = document.getElementById("form");
     var input = document.getElementById("input");

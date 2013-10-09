@@ -1,18 +1,9 @@
 module PingPongIO
   module Frame
-    OPCODES = {
-      0 => :continuation,
-      1 => :text,
-      2 => :binary,
-      8 => :connection_close,
-      9 => :ping,
-      10 => :pong
-    }
-
     class Request
       def initialize(data)
         @data = data
-        decode
+        parse_data
       end
 
       def message
@@ -27,7 +18,7 @@ module PingPongIO
 
       private
 
-      def decode
+      def parse_data
         index = 0
 
         @fin = (@data.getbyte(index) & 0b10000000) >> 7

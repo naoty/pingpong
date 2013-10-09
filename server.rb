@@ -1,6 +1,7 @@
 require "socket"
 require "./handshake"
-require "./frame/request"
+require "./frame"
+require "./message"
 
 module PingPongIO
   class Server
@@ -14,10 +15,12 @@ module PingPongIO
 
     def start
       @sockets = {}
+      @message_queue = []
 
       loop do
         to_read = @sockets.values << @server
-        readables, writables, _ = IO.select(to_read)
+        to_write = @sockets.values
+        readables, writables, _ = IO.select(to_read, to_write)
 
         readables.each do |socket|
           if socket == @server
@@ -26,11 +29,21 @@ module PingPongIO
             begin
               request = socket.read_nonblock(CHUNK_SIZE)
               message = Frame::Request.new(request).message
-              puts message
               # the message may be passed to a web application.
+              @message_queue << Message.new(socket.fileno, message)
             rescue EOFError
               @sockets.delete(socket.fileno)
             end
+          end
+        end
+
+        message = @message_queue.shift
+        next if message.nil? || message.empty?
+
+        writables.each do |socket|
+          if socket.fileno != message.from
+            data = Frame::Response.new(message.body).data
+            socket.write_nonblock(data)
           end
         end
       end
