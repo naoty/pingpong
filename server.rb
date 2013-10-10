@@ -3,7 +3,7 @@ require "./handshake"
 require "./frame"
 require "./message"
 
-module PingPongIO
+module PingPong
   class Server
     CHUNK_SIZE = 1024 * 16
 
@@ -70,4 +70,4 @@ module PingPongIO
   end
 end
 
-PingPongIO::Server.new("127.0.0.1", 4481).start
+PingPong::Server.new("127.0.0.1", 4481).start

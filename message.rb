@@ -1,4 +1,4 @@
-module PingPongIO
+module PingPong
   class Message
     attr_reader :from, :body
 

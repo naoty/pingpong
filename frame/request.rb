@@ -1,4 +1,4 @@
-module PingPongIO
+module PingPong
   module Frame
     class Request
       def initialize(data)

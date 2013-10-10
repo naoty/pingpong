@@ -1,4 +1,4 @@
-module PingPongIO
+module PingPong
   module Frame
     OPCODES = {
       0 => :continuation,

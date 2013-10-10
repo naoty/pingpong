@@ -1,6 +1,6 @@
 # encoding: BINARY
 
-module PingPongIO
+module PingPong
   module Frame
     class Response
       def initialize(message)

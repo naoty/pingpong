@@ -1,4 +1,4 @@
-pingpong-io
+pingpong
 ========
 
 WebSocket server written by Ruby
